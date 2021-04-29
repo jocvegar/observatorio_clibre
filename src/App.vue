@@ -97,6 +97,10 @@ export default {
       },
     ],
   }),
+  created() {
+    document.title =
+      "C-Libre | Observatorio de Agresiones a Comunicadores Sociales";
+  },
 };
 </script>
 
