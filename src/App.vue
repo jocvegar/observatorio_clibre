@@ -13,7 +13,7 @@
         <v-toolbar-title
           class="shrink mt-1 hidden-sm-and-down blue--text text--darken-4 ml-1"
         >
-          Observatorio CLibre
+          Observatorio C-Libre
         </v-toolbar-title>
       </div>
 

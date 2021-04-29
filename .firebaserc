@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "clibre-520d0"
+  },
+   "targets": {
+    "clibre-520d0": {
+      "hosting": {
+        "default": [
+          "clibre"
+        ]
+      }
+    }
+  }
+}
