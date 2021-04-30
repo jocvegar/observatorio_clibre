@@ -1,15 +1,28 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
+import { auth } from "@/firebaseConfig";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-export default new Vuex.Store({
+auth.onAuthStateChanged((firebaseUser) => {
+  if (firebaseUser) {
+    store.commit("setCurrentUser", firebaseUser);
+  }
+});
+
+export const store = new Vuex.Store({
   state: {
+    currentUser: null,
   },
   mutations: {
+    setCurrentUser(state, val) {
+      state.currentUser = val;
+    },
   },
   actions: {
+    clearData({ commit }) {
+      commit("setCurrentUser", null);
+    },
   },
-  modules: {
-  }
-})
+  modules: {},
+});

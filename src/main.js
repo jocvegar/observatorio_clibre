@@ -1,10 +1,11 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import { store } from "./store";
 import vuetify from "./plugins/vuetify";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
+import { auth } from "@/firebaseConfig";
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -16,9 +17,15 @@ Icon.Default.mergeOptions({
 
 Vue.config.productionTip = false;
 
-new Vue({
-  router,
-  store,
-  vuetify,
-  render: (h) => h(App),
-}).$mount("#app");
+let app;
+
+auth.onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
+      router,
+      store,
+      vuetify,
+      render: (h) => h(App),
+    }).$mount("#app");
+  }
+});

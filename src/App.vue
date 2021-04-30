@@ -27,22 +27,22 @@
           text
           exact
           link
-          id="no-background-hover"
+          class="no-background-hover"
         >
           <v-icon color="blue darken-4">{{ item.icon }}</v-icon>
-          <span class="mr-2 pl-2 blue--text text--darken-4">
+          <span class="mr-2 pl-1 blue--text text--darken-4">
             {{ item.title }}
           </span>
         </v-btn>
-        <!-- <v-btn
-          href="https://github.com/vuetifyjs/vuetify/releases/latest"
-          target="_blank"
+        <v-btn
           text
+          v-if="currentUser"
+          @click="logout"
+          class="no-background-hover"
         >
-          <span class="mr-2 blue--text text--darken-4">Nav 1</span>
-          <v-icon color="blue darken-4">mdi-open-in-new</v-icon>
+          <v-icon color="blue darken-4">fa-sign-out-alt</v-icon>
+          <span class="mr-2 pl-1 blue--text text--darken-4">Salir</span>
         </v-btn>
-        -->
       </div>
 
       <div class="hidden-sm-and-up">
@@ -60,13 +60,28 @@
       fixed
     >
       <v-list>
-        <v-list-item v-for="([icon, text], i) in sideItems" :key="i" link>
+        <v-list-item
+          v-for="([icon, text, to], i) in sideItems"
+          :key="i"
+          link
+          :to="to"
+        >
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>{{ text }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-if="currentUser" @click="logout">
+          <v-list-item-icon>
+            <v-icon>fa-sign-out-alt</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Salir</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -79,27 +94,41 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { auth } from "@/firebaseConfig";
+
 export default {
   name: "App",
   data: () => ({
     rightDrawer: false,
-    sideItems: [["mdi-home", "Home"]],
+    sideItems: [["fa-home", "Inicio", "/"]],
     items: [
       {
-        icon: "mdi-home-variant",
-        title: "Home",
+        icon: "fa-home",
+        title: "Inicio",
         to: "/",
-      },
-      {
-        icon: "mdi-cup-water",
-        title: "Ventas",
-        to: "/ventas",
       },
     ],
   }),
   created() {
     document.title =
       "C-Libre | Observatorio de Agresiones a Comunicadores Sociales";
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+  methods: {
+    logout() {
+      auth
+        .signOut()
+        .then(() => {
+          this.$store.dispatch("clearData");
+          this.$router.push("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
@@ -108,7 +137,7 @@ export default {
 .v-navigation-drawer--temporary {
   z-index: 1001 !important;
 }
-#no-background-hover::before {
+.no-background-hover::before {
   background-color: transparent !important;
 }
 </style>

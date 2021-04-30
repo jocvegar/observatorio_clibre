@@ -44,7 +44,7 @@ import {
   LIcon,
 } from "vue2-leaflet";
 export default {
-  name: "Map",
+  name: "MapVisual",
   components: {
     LMap,
     LTileLayer,
