@@ -27,8 +27,8 @@ export default {
     return {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       zoom: 8,
-      center: [47.31322, -1.319482],
-      markerLatLng: [47.31322, -1.319482],
+      center: [14.0849, -87.2077],
+      markerLatLng: [14.0849, -87.2077],
     };
   },
 };
