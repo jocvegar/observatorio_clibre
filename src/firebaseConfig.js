@@ -25,5 +25,13 @@ const currentUser = auth.currentUser;
 
 // firebase collections
 const departmentsCollection = db.collection("departamentos");
+const municipiosCollection = db.collection("municipios");
 
-export { db, auth, firebase, currentUser, departmentsCollection };
+export {
+  db,
+  auth,
+  firebase,
+  currentUser,
+  departmentsCollection,
+  municipiosCollection,
+};
