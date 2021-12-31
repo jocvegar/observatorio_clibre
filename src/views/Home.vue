@@ -1,14 +1,16 @@
 <template>
   <div>
-    <!-- <MapVisual></MapVisual> -->
-    <MapBox></MapBox>
+    <v-container>
+      <!-- <MapVisual></MapVisual> -->
+      <MapBox></MapBox>
+    </v-container>
   </div>
 </template>
 
 <script>
 // import MapVisual from "@/components/MapComponents/MapVisual";
-import MapBox from "@/components/MapComponents/MapBox";
 // import { departmentsCollection } from "@/firebaseConfig";
+import MapBox from "@/components/MapComponents/MapBox";
 
 export default {
   name: "Home",
