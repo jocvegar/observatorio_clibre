@@ -8,7 +8,7 @@
 
     <v-row>
       <v-col cols="12" class="py-0">
-        <v-row justify="end">
+        <v-row justify="end" class="mr-2">
           <v-btn
             color="primary"
             class="ma-2 white--text"
@@ -24,45 +24,53 @@
     <br />
     <v-row class="pa-0 ma-0">
       <v-col cols="12">
-        <v-data-table
-          :headers="headers"
-          :items="municipios"
-          :items-per-page="10"
-          :loading="loading"
-          :sort-desc="true"
-          sort-by="nombre"
-          :footer-props="{
-            itemsPerPageOptions: [10, 25, 50, 100, 250],
-          }"
-        >
-          <template v-slot:[`item.departamentoId`]="{ item }">
-            {{ handleDepartamentoName(item.departamentoId) }}
-          </template>
+        <v-card>
+          <v-card-title>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Buscar"
+              single-line
+              hide-details
+            ></v-text-field>
+          </v-card-title>
+          <v-data-table
+            :headers="headers"
+            :items="municipios"
+            :items-per-page="10"
+            :loading="loading"
+            :sort-desc="false"
+            sort-by="nombre"
+            :search="search"
+            :footer-props="{
+              itemsPerPageOptions: [10, 25, 50, 100, 250],
+            }"
+          >
+            <template v-slot:[`item.options`]="{ item }">
+              <v-btn
+                @click="editMunicipio(item)"
+                small
+                class="mx-4"
+                rounded
+                outlined
+                color="secondary"
+              >
+                Editar
+              </v-btn>
 
-          <template v-slot:[`item.options`]="{ item }">
-            <v-btn
-              @click="editMunicipio(item)"
-              small
-              class="mx-4"
-              rounded
-              outlined
-              color="secondary"
-            >
-              Editar
-            </v-btn>
-
-            <v-btn
-              @click="deleteMunicipio(item)"
-              small
-              class="mx-4"
-              rounded
-              outlined
-              color="red"
-            >
-              Eliminar
-            </v-btn>
-          </template>
-        </v-data-table>
+              <v-btn
+                @click="deleteMunicipio(item)"
+                small
+                class="mx-4"
+                rounded
+                outlined
+                color="red"
+              >
+                Eliminar
+              </v-btn>
+            </template>
+          </v-data-table>
+        </v-card>
       </v-col>
     </v-row>
 
@@ -81,6 +89,8 @@
 
 <script>
 import AddEditMunicipio from "./AddEditMunicipio";
+// import readXlsxFile from "read-excel-file";
+
 import {
   db,
   departmentsCollection,
@@ -93,6 +103,7 @@ export default {
   },
   data() {
     return {
+      search: "",
       loading: true,
       snackbar: false,
       snackbarText: "",
@@ -109,7 +120,7 @@ export default {
         },
         {
           text: "Departamento",
-          value: "departamentoId",
+          value: "departamentoNombre",
         },
         {
           text: "Latitud",
@@ -186,10 +197,39 @@ export default {
       this.snackbar = true;
       this.modalAddEdit = false;
     },
-    handleDepartamentoName(departamentoId) {
-      return this.departamentos.find((dept) => dept.id == departamentoId)
-        .nombre;
-    },
+    // onFileChange(event) {
+    //   let xlsxfile = event.target.files ? event.target.files[0] : null;
+    //   readXlsxFile(xlsxfile).then((rows) => {
+    //     console.log("rows:", rows);
+    //     rows.forEach((row) => {
+    //       console.log(`row[3]`, row[3]);
+
+    //       db.collection("departamentos")
+    //         .where("nombre", "==", row[3])
+    //         .get()
+    //         .then((snapShots) => {
+    //           snapShots.forEach((snap) => {
+    //             console.log(`snap.id`, snap.id);
+
+    //             db.collection("municipios")
+    //               .add({
+    //                 nombre: row[4],
+    //                 departamentoId: snap.id,
+    //                 departamentoNombre: row[3],
+    //                 latitud: null,
+    //                 longitud: null,
+    //               })
+    //               .then((docRef) => {
+    //                 console.log("Document written with ID: ", docRef.id);
+    //               })
+    //               .catch((error) => {
+    //                 console.error("Error adding document: ", error);
+    //               });
+    //           });
+    //         });
+    //     });
+    //   });
+    // },
   },
 };
 </script>

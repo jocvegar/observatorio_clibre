@@ -9,6 +9,7 @@
           src="@/assets/clibre_logo.jpg"
           transition="scale-transition"
           width="100"
+          @click="$router.push('/')"
         />
       </div>
       <v-spacer></v-spacer>
@@ -32,9 +33,9 @@
           @click="logout"
           class="no-background-hover"
         >
-          <span class="blue--text text--darken-4 font-weight-bold subtitle-1"
-            >Salir</span
-          >
+          <span class="blue--text text--darken-4 font-weight-bold subtitle-1">
+            Salir
+          </span>
         </v-btn>
       </div>
 
@@ -117,5 +118,3 @@ export default {
   },
 };
 </script>
-
-<style></style>
