@@ -27,16 +27,19 @@
             {{ item.title }}
           </span>
         </v-btn>
-        <v-btn
-          text
-          v-if="currentUser"
-          @click="logout"
-          class="no-background-hover"
-        >
-          <span class="blue--text text--darken-4 font-weight-bold subtitle-1">
-            Salir
-          </span>
-        </v-btn>
+
+        <span v-if="currentUser">
+          <v-btn text to="/admin" class="no-background-hover">
+            <span class="blue--text text--darken-4 font-weight-bold subtitle-1">
+              Admin
+            </span>
+          </v-btn>
+          <v-btn text @click="logout" class="no-background-hover">
+            <span class="blue--text text--darken-4 font-weight-bold subtitle-1">
+              Salir
+            </span>
+          </v-btn>
+        </span>
       </div>
 
       <div class="hidden-sm-and-up">
@@ -96,6 +99,13 @@ export default {
     rightDrawer: false,
     sideItems: [["fa-home", "Inicio", "/"]],
     items: [
+      {
+        icon: "fa-home",
+        title: "Inicio",
+        to: "/",
+      },
+    ],
+    adminItems: [
       {
         icon: "fa-home",
         title: "Inicio",
