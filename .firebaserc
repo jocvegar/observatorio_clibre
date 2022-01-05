@@ -2,11 +2,22 @@
   "projects": {
     "default": "clibre-520d0"
   },
-   "targets": {
+  "targets": {
     "clibre-520d0": {
       "hosting": {
         "default": [
           "clibre"
+        ],
+        "ignore": [
+          "firebase.json",
+          "**/.*",
+          "**/node_modules/**"
+        ],
+        "rewrites": [
+          {
+            "source": "**",
+            "destination": "/index.html"
+          }
         ]
       }
     }
