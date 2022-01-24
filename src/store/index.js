@@ -13,6 +13,7 @@ auth.onAuthStateChanged((firebaseUser) => {
 export const store = new Vuex.Store({
   state: {
     currentUser: null,
+    adminNavbar: true,
   },
   mutations: {
     setCurrentUser(state, val) {

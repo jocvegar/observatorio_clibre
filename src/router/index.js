@@ -24,6 +24,14 @@ const routes = [
     },
   },
   {
+    path: "/admin/departamentos",
+    name: "Departamentos",
+    component: () => import("../views/admin/Departamentos.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "*",
     redirect: "/",
   },

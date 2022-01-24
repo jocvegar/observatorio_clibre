@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Nav :currentUser="currentUser" />
+    <component :is="navComponent" :currentUser="currentUser" />
     <v-main>
       <router-view />
     </v-main>
@@ -10,6 +10,7 @@
 
 <script>
 import Nav from "@/components/Nav";
+import AdminNav from "@/components/AdminNav";
 import Footer from "@/components/Footer";
 import { mapState } from "vuex";
 
@@ -17,6 +18,7 @@ export default {
   name: "App",
   components: {
     Nav,
+    AdminNav,
     Footer,
   },
   created() {
@@ -25,6 +27,13 @@ export default {
   },
   computed: {
     ...mapState(["currentUser"]),
+    navComponent() {
+      if (this.$store.state.adminNavbar) {
+        return AdminNav;
+      } else {
+        return Nav;
+      }
+    },
   },
 };
 </script>

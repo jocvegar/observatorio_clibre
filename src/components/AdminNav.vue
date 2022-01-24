@@ -26,9 +26,9 @@
       color="white"
       class="px-4 px-md-10"
     >
-      <div v-if="mobile" class="ml-n8">
+      <div class="ml-n8">
         <v-btn icon @click.stop="drawer = !drawer">
-          <v-icon>mdi-{{ `chevron-${miniVariant ? "right" : "left"}` }}</v-icon>
+          <v-icon>mdi-{{ `chevron-${drawer ? "left" : "right"}` }}</v-icon>
         </v-btn>
       </div>
 
@@ -128,26 +128,30 @@ export default {
     rightDrawer: false,
     clipped: true,
     mobile: true,
-    drawer: false,
-    miniVariant: false,
+    drawer: true,
     sideItems: [["fa-home", "Inicio", "/"]],
     navigation: [
       {
-        icon: "fa-home",
-        title: "Inicio",
-        to: "/",
+        icon: "fa-user-shield",
+        title: "Administración",
+        to: "/admin",
+      },
+      {
+        icon: "fa-globe-americas",
+        title: "Departamentos",
+        to: "/admin/departamentos",
       },
     ],
     items: [
       {
         icon: "mdi-home-variant",
-        title: "Home",
+        title: "Inicio",
         to: "/",
       },
       {
         icon: "mdi-cup-water",
-        title: "Ventas",
-        to: "/ventas",
+        title: "Admin",
+        to: "/admin",
       },
     ],
   }),
