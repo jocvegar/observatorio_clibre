@@ -138,8 +138,8 @@ export default {
       },
       {
         icon: "fa-globe-americas",
-        title: "Departamentos",
-        to: "/admin/departamentos",
+        title: "Municipios",
+        to: "/admin/municipios",
       },
     ],
     items: [

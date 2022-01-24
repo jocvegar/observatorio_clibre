@@ -28,11 +28,7 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
     navComponent() {
-      if (this.$store.state.adminNavbar) {
-        return AdminNav;
-      } else {
-        return Nav;
-      }
+      return this.$store.state.adminNavbar ? AdminNav : Nav;
     },
   },
 };

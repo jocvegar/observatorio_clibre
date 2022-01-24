@@ -23,5 +23,8 @@ export default {
       departments: [],
     };
   },
+  mounted() {
+    this.$store.commit("setAdminNavBar", this.$route.meta.adminNavBar);
+  },
 };
 </script>

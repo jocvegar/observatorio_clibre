@@ -140,6 +140,7 @@ export default {
   mounted() {
     this.getDepartments();
     this.getMunicipios();
+    this.$store.commit("setAdminNavBar", this.$route.meta.adminNavBar);
   },
   methods: {
     getDepartments() {

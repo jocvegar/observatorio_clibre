@@ -21,14 +21,16 @@ const routes = [
     component: () => import("../views/Admin.vue"),
     meta: {
       requiresAuth: true,
+      adminNavBar: true,
     },
   },
   {
-    path: "/admin/departamentos",
-    name: "Departamentos",
-    component: () => import("../views/admin/Departamentos.vue"),
+    path: "/admin/municipios",
+    name: "Municipios",
+    component: () => import("../views/admin/Municipios.vue"),
     meta: {
       requiresAuth: true,
+      adminNavBar: true,
     },
   },
   {
