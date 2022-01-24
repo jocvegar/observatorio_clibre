@@ -73,7 +73,6 @@
         </v-card>
       </v-col>
     </v-row>
-
     <v-dialog persistent v-model="modalAddEdit" max-width="90vw">
       <add-edit-municipio
         :type="type"
@@ -204,21 +203,19 @@ export default {
     //     console.log("rows:", rows);
     //     rows.forEach((row) => {
     //       console.log(`row[3]`, row[3]);
-
-    //       db.collection("departamentos")
-    //         .where("nombre", "==", row[3])
+    //       console.log(`row[4]`, row[4]);
+    //       db.collection("municipios")
+    //         .where("departamentoNombre", "==", row[3])
+    //         .where("nombre", "==", row[4])
     //         .get()
     //         .then((snapShots) => {
     //           snapShots.forEach((snap) => {
     //             console.log(`snap.id`, snap.id);
-
     //             db.collection("municipios")
-    //               .add({
-    //                 nombre: row[4],
-    //                 departamentoId: snap.id,
-    //                 departamentoNombre: row[3],
-    //                 latitud: null,
-    //                 longitud: null,
+    //               .doc(snap.id)
+    //               .update({
+    //                 latitud: row[5],
+    //                 longitud: row[6],
     //               })
     //               .then((docRef) => {
     //                 console.log("Document written with ID: ", docRef.id);
@@ -226,6 +223,19 @@ export default {
     //               .catch((error) => {
     //                 console.error("Error adding document: ", error);
     //               });
+    //             //         .add({
+    //             //           nombre: row[4],
+    //             //           departamentoId: snap.id,
+    //             //           departamentoNombre: row[3],
+    //             //           latitud: null,
+    //             //           longitud: null,
+    //             //         })
+    //             //         .then((docRef) => {
+    //             //           console.log("Document written with ID: ", docRef.id);
+    //             //         })
+    //             //         .catch((error) => {
+    //             //           console.error("Error adding document: ", error);
+    //             //         });
     //           });
     //         });
     //     });

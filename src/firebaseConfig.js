@@ -26,6 +26,7 @@ const currentUser = auth.currentUser;
 // firebase collections
 const departmentsCollection = db.collection("departamentos");
 const municipiosCollection = db.collection("municipios");
+const noticiasCollection = db.collection("noticias");
 
 export {
   db,
@@ -34,4 +35,5 @@ export {
   currentUser,
   departmentsCollection,
   municipiosCollection,
+  noticiasCollection,
 };

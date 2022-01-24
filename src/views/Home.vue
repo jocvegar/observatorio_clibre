@@ -9,7 +9,6 @@
 
 <script>
 // import MapVisual from "@/components/MapComponents/MapVisual";
-// import { departmentsCollection } from "@/firebaseConfig";
 import MapBox from "@/components/MapComponents/MapBox";
 
 export default {
@@ -17,11 +16,6 @@ export default {
   components: {
     // MapVisual,
     MapBox,
-  },
-  data() {
-    return {
-      departments: [],
-    };
   },
   mounted() {
     this.$store.commit("setAdminNavBar", this.$route.meta.adminNavBar);
