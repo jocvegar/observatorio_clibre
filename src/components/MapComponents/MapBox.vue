@@ -9,7 +9,7 @@
           :key="noticia.id"
         >
           <LPopup>{{ noticia.noticia }}</LPopup>
-          <LTooltip>Click más informacion</LTooltip>
+          <LTooltip>{{ noticia.noticia }}</LTooltip>
         </LMarker>
       </LMap>
     </div>
@@ -17,11 +17,12 @@
 </template>
 
 <script>
-const accessToken =
-  "pk.eyJ1Ijoiam9jdmVnYXIiLCJhIjoiY2tvMWljN3R2MG01cTJucnRhajd3OXVvNSJ9.XVf_8jXk9CZg07XolcEZ3Q";
+import { mapbox } from "../../../mapConfig";
+const accessToken = mapbox.apiKey;
 const id = "mapbox/streets-v11";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
 import { noticiasCollection } from "@/firebaseConfig";
+// import { municipiosCollection } from "@/firebaseConfig";
 
 export default {
   name: "Map",
@@ -34,10 +35,9 @@ export default {
   },
   data() {
     return {
-      center: [14.0849, -87.2077],
+      center: [14.594215561943921, -86.9293212890625],
       url: `https://api.mapbox.com/styles/v1/${id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
       zoom: 8,
-      markerLatLng: [14.0849, -87.2077],
       noticias: [],
       loading: true,
     };
