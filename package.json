@@ -16,6 +16,7 @@
     "leaflet": "^1.7.1",
     "read-excel-file": "^5.2.25",
     "vue": "^2.6.11",
+    "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vue2-leaflet": "^2.7.0",
     "vuetify": "^2.4.0",

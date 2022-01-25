@@ -34,6 +34,15 @@ const routes = [
     },
   },
   {
+    path: "/admin/notas",
+    name: "Notas",
+    component: () => import("../views/admin/Notas.vue"),
+    meta: {
+      requiresAuth: true,
+      adminNavBar: true,
+    },
+  },
+  {
     path: "*",
     redirect: "/",
   },

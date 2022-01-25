@@ -41,8 +41,10 @@ export default {
 .no-background-hover::before {
   background-color: transparent !important;
 }
-
 .v-application {
   font-family: "Open Sans", sans-serif !important;
+}
+.nowrap {
+  white-space: nowrap !important;
 }
 </style>

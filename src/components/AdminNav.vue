@@ -137,6 +137,11 @@ export default {
         to: "/admin",
       },
       {
+        icon: "fa-newspaper",
+        title: "Notas",
+        to: "/admin/notas",
+      },
+      {
         icon: "fa-globe-americas",
         title: "Municipios",
         to: "/admin/municipios",
