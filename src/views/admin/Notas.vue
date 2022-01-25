@@ -61,7 +61,6 @@
               >
                 Editar
               </v-btn>
-
               <v-btn
                 @click="deleteNota(item)"
                 small

@@ -23,10 +23,6 @@
           <v-snackbar top :timeout="3000" v-model="snackbar">
             {{ snackbarText }}
           </v-snackbar>
-          nota:{{ nota }} <br />
-
-          <span>{{ nota.date | moment("DD/MM/YYYY") }}</span>
-
           <v-row align="end">
             <v-col cols="12" md="6">
               <v-menu
@@ -39,7 +35,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    :value="latinDateFormat"
+                    :value="formattedDate"
                     label="Fecha"
                     prepend-icon="mdi-calendar"
                     readonly
@@ -164,13 +160,9 @@
 </template>
 
 <script>
-import {
-  db,
-  departmentsCollection,
-  municipiosCollection,
-  notasCollection,
-} from "@/firebaseConfig";
+import { municipiosCollection, notasCollection } from "@/firebaseConfig";
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   name: "AddEditNota",
@@ -179,7 +171,6 @@ export default {
       type: String,
       required: true,
     },
-
     item: {
       type: Object,
       required: false,
@@ -187,7 +178,6 @@ export default {
   },
   data() {
     return {
-      departamentos: [],
       municipios: [],
       loading: true,
       snackbarText: "",
@@ -235,9 +225,21 @@ export default {
   mounted() {
     let scrollPosition = document.getElementsByClassName("v-dialog")[0];
     if (scrollPosition) scrollPosition.scrollTop = 0;
-    this.getDepartments();
     if (this.type == "edit") {
-      this.nota = Object.assign({}, this.item);
+      let selectedDepartamento = this.departamentos.filter(
+        (departamento) => departamento.id == this.item.departamentoId
+      )[0];
+
+      let selectedMunicipio = this.allMunicipios.filter(
+        (municipio) => municipio.id == this.item.municipioId
+      )[0];
+
+      this.nota = Object.assign({}, this.item, {
+        departamento: selectedDepartamento,
+        municipio: selectedMunicipio,
+      });
+
+      this.getMunicipios(selectedDepartamento);
     }
     this.loading = false;
   },
@@ -271,11 +273,26 @@ export default {
         });
     },
     updateNota() {
-      db.collection("municipios")
+      notasCollection
         .doc(this.item.id)
-        .update(this.municipio)
+        .update({
+          date: this.nota.date,
+          titular: this.nota.titular,
+          tipo_de_agresion: this.nota.tipo_de_agresion,
+          genero: this.nota.genero,
+          agresor: this.nota.agresor,
+          medio_de_comunucacion: this.nota.medio_de_comunucacion,
+          link: this.nota.link,
+          departamentoNombre: this.nota.departamento.nombre,
+          departamentoId: this.nota.departamento.id,
+          municipioNombre: this.nota.municipio.nombre,
+          municipioId: this.nota.municipio.id,
+          latitud: this.nota.municipio.latitud,
+          longitud: this.nota.municipio.longitud,
+          narracion: this.nota.narracion,
+        })
         .then(() => {
-          this.$emit("success", "Municipio actualizado exitosamente.");
+          this.$emit("success", "Nota actualizado exitosamente.");
         })
         .catch((err) => {
           this.snackbarText =
@@ -284,23 +301,8 @@ export default {
           console.log(`error:`, err);
         });
     },
-    getDepartments() {
-      departmentsCollection
-        .orderBy("nombre", "asc")
-        .get()
-        .then((departments) => {
-          const departmentArray = [];
-          departments.docs.forEach((department) => {
-            departmentArray.push(
-              Object.assign({ id: department.id }, department.data())
-            );
-          });
-          this.departamentos = departmentArray;
-        });
-    },
     getMunicipios(department) {
       this.municipios = [];
-
       municipiosCollection
         .where("departamentoId", "==", department.id)
         .orderBy("nombre", "asc")
@@ -313,7 +315,8 @@ export default {
     },
   },
   computed: {
-    latinDateFormat() {
+    ...mapState(["departamentos", "allMunicipios"]),
+    formattedDate() {
       return this.nota.date ? moment(this.nota.date).format("DD/MM/YYYY") : "";
     },
   },
