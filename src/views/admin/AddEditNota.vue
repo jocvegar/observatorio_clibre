@@ -168,6 +168,7 @@ import {
   db,
   departmentsCollection,
   municipiosCollection,
+  notasCollection,
 } from "@/firebaseConfig";
 import moment from "moment";
 
@@ -242,16 +243,32 @@ export default {
   },
   methods: {
     submitNew() {
-      // db.collection("municipios")
-      //   .add(this.municipio)
-      //   .then(() => {
-      //     this.$emit("success", "Municipio creado exitosamente.");
-      //   })
-      //   .catch((err) => {
-      this.snackbarText = "Ocurrió un error inesperado, inténtelo nuevamente.";
-      this.snackbar = true;
-      // console.log("error", err);
-      // });
+      notasCollection
+        .add({
+          date: this.nota.date,
+          titular: this.nota.titular,
+          tipo_de_agresion: this.nota.tipo_de_agresion,
+          genero: this.nota.genero,
+          agresor: this.nota.agresor,
+          medio_de_comunucacion: this.nota.medio_de_comunucacion,
+          link: this.nota.link,
+          departamentoNombre: this.nota.departamento.nombre,
+          departamentoId: this.nota.departamento.id,
+          municipioNombre: this.nota.municipio.nombre,
+          municipioId: this.nota.municipio.id,
+          latitud: this.nota.municipio.latitud,
+          longitud: this.nota.municipio.longitud,
+          narracion: this.nota.narracion,
+        })
+        .then(() => {
+          this.$emit("success", "Municipio creado exitosamente.");
+        })
+        .catch((err) => {
+          this.snackbarText =
+            "Ocurrió un error inesperado, inténtelo nuevamente.";
+          this.snackbar = true;
+          console.log("error", err);
+        });
     },
     updateNota() {
       db.collection("municipios")

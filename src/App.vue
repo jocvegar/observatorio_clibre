@@ -25,6 +25,9 @@ export default {
     document.title =
       "C-Libre | Observatorio de Agresiones a Comunicadores Sociales";
   },
+  mounted() {
+    this.$store.dispatch("setDepartamentos");
+  },
   computed: {
     ...mapState(["currentUser"]),
     navComponent() {

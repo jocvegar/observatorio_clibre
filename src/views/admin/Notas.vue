@@ -46,6 +46,10 @@
               itemsPerPageOptions: [10, 25, 50, 100, 250],
             }"
           >
+            <template v-slot:[`item.date`]="{ item }">
+              <span>{{ item.date | moment("DD/MM/YYYY") }}</span>
+            </template>
+
             <template v-slot:[`item.options`]="{ item }">
               <v-btn
                 @click="editNota(item)"
@@ -143,12 +147,12 @@ export default {
         },
         {
           text: "Departamento",
-          value: "departamento",
+          value: "departamentoNombre",
           class: "nowrap",
         },
         {
           text: "Municipio",
-          value: "municipio",
+          value: "municipioNombre",
           class: "nowrap",
         },
         {
@@ -192,6 +196,21 @@ export default {
       this.type = "edit";
       this.item = item;
       this.modalAddEdit = true;
+    },
+    deleteNota(item) {
+      if (confirm(`¿Estás seguro de eliminar nota?`)) {
+        notasCollection
+          .doc(item.id)
+          .delete()
+          .then(() => {
+            this.snackbarText = "Nota borrado";
+            this.snackbar = true;
+          })
+          .catch((error) => {
+            this.snackbarText = `Ocurrió un error inesperado, inténtelo nuevamente. ${error}`;
+            this.snackbar = true;
+          });
+      }
     },
     handleSuccess(data) {
       this.snackbarText = data;

@@ -5,7 +5,6 @@
         <h1>Municipios</h1>
       </v-col>
     </v-row>
-
     <v-row>
       <v-col cols="12" class="py-0">
         <v-row justify="end" class="mr-2">
@@ -88,13 +87,10 @@
 
 <script>
 import AddEditMunicipio from "./AddEditMunicipio";
+import { mapState } from "vuex";
 // import readXlsxFile from "read-excel-file";
 
-import {
-  db,
-  departmentsCollection,
-  municipiosCollection,
-} from "@/firebaseConfig";
+import { municipiosCollection } from "@/firebaseConfig";
 export default {
   name: "departamentos",
   components: {
@@ -107,7 +103,6 @@ export default {
       snackbar: false,
       snackbarText: "",
       municipios: [],
-      departamentos: [],
       type: "",
       item: null,
       randomKey: 0,
@@ -137,22 +132,10 @@ export default {
     };
   },
   mounted() {
-    this.getDepartments();
     this.getMunicipios();
     this.$store.commit("setAdminNavBar", this.$route.meta.adminNavBar);
   },
   methods: {
-    getDepartments() {
-      departmentsCollection.onSnapshot((departments) => {
-        const departmentArray = [];
-        departments.docs.forEach((department) => {
-          departmentArray.push(
-            Object.assign({ id: department.id }, department.data())
-          );
-        });
-        this.departamentos = departmentArray;
-      });
-    },
     getMunicipios() {
       municipiosCollection.onSnapshot((municipios) => {
         const municipioArray = [];
@@ -179,7 +162,7 @@ export default {
     },
     deleteMunicipio(item) {
       if (confirm(`¿Estás seguro de eliminar ${item.nombre}?`)) {
-        db.collection("municipios")
+        municipiosCollection
           .doc(item.id)
           .delete()
           .then(() => {
@@ -241,6 +224,9 @@ export default {
     //     });
     //   });
     // },
+  },
+  computed: {
+    ...mapState(["departamentos"]),
   },
 };
 </script>
