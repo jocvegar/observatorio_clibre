@@ -8,8 +8,8 @@
           :lat-lng="[noticia.latitud, noticia.longitud]"
           :key="noticia.id"
         >
-          <LPopup>{{ noticia.noticia }}</LPopup>
-          <LTooltip>{{ noticia.noticia }}</LTooltip>
+          <LPopup>{{ noticia.titular }}</LPopup>
+          <LTooltip>{{ noticia.titular }}</LTooltip>
         </LMarker>
       </LMap>
     </div>
@@ -21,7 +21,7 @@ import { mapbox } from "../../../mapConfig";
 const accessToken = mapbox.apiKey;
 const id = "mapbox/streets-v11";
 import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-import { noticiasCollection } from "@/firebaseConfig";
+import { notasCollection } from "@/firebaseConfig";
 // import { municipiosCollection } from "@/firebaseConfig";
 
 export default {
@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     getNoticias() {
-      noticiasCollection.onSnapshot((noticias) => {
+      notasCollection.onSnapshot((noticias) => {
         const noticiasArray = [];
         noticias.docs.forEach((noticia) => {
           noticiasArray.push(Object.assign({ id: noticia.id }, noticia.data()));
