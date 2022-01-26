@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { auth } from "@/firebaseConfig";
-import { departmentsCollection, municipiosCollection } from "@/firebaseConfig";
+import {
+  departmentsCollection,
+  municipiosCollection,
+  notasCollection,
+} from "@/firebaseConfig";
 
 Vue.use(Vuex);
 
@@ -17,6 +21,7 @@ export const store = new Vuex.Store({
     adminNavbar: false,
     departamentos: [],
     allMunicipios: [],
+    notas: [],
   },
   mutations: {
     setCurrentUser(state, val) {
@@ -31,13 +36,15 @@ export const store = new Vuex.Store({
     setMunicipios(state, val) {
       state.allMunicipios = val;
     },
+    setNotas(state, val) {
+      state.notas = val;
+    },
   },
   actions: {
     clearData({ commit }) {
       commit("setCurrentUser", null);
     },
     setDepartamentos({ commit }) {
-      console.log(" I am called");
       departmentsCollection
         .orderBy("nombre", "asc")
         .get()
@@ -64,6 +71,15 @@ export const store = new Vuex.Store({
           });
           commit("setMunicipios", municipiosArray);
         });
+    },
+    setNotas({ commit }) {
+      notasCollection.onSnapshot((noticias) => {
+        const noticiasArray = [];
+        noticias.docs.forEach((noticia) => {
+          noticiasArray.push(Object.assign({ id: noticia.id }, noticia.data()));
+        });
+        commit("setNotas", noticiasArray);
+      });
     },
   },
   modules: {},

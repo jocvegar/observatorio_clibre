@@ -28,6 +28,7 @@ export default {
   mounted() {
     this.$store.dispatch("setDepartamentos");
     this.$store.dispatch("setMunicipios");
+    this.$store.dispatch("setNotas");
   },
   computed: {
     ...mapState(["currentUser"]),

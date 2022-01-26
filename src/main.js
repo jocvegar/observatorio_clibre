@@ -6,6 +6,8 @@ import vuetify from "./plugins/vuetify";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import { auth } from "@/firebaseConfig";
+import VueLodash from "vue-lodash";
+import lodash from "lodash";
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -17,6 +19,7 @@ Icon.Default.mergeOptions({
 
 Vue.config.productionTip = false;
 Vue.use(require("vue-moment"));
+Vue.use(VueLodash, { lodash: lodash });
 
 let app;
 

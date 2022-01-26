@@ -1,15 +1,20 @@
 <template>
   <div id="container">
     <div id="mapContainer">
-      <LMap :zoom="zoom" :center="center" style="z-index: 0">
+      <LMap
+        :zoom="zoom"
+        :center="center"
+        style="z-index: 0"
+        minZoom="7"
+        :options="{ scrollWheelZoom: false }"
+      >
         <LTileLayer :url="url"></LTileLayer>
         <LMarker
-          v-for="noticia in noticias"
-          :lat-lng="[noticia.latitud, noticia.longitud]"
-          :key="noticia.id"
+          v-for="nota in notas"
+          :lat-lng="[nota[0].latitud, nota[0].longitud]"
+          :key="nota[0].id"
         >
-          <LPopup>{{ noticia.titular }}</LPopup>
-          <LTooltip>{{ noticia.titular }}</LTooltip>
+          <LTooltip>{{ nota.length }}</LTooltip>
         </LMarker>
       </LMap>
     </div>
@@ -20,17 +25,20 @@
 import { mapbox } from "../../../mapConfig";
 const accessToken = mapbox.apiKey;
 const id = "mapbox/streets-v11";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-import { notasCollection } from "@/firebaseConfig";
-// import { municipiosCollection } from "@/firebaseConfig";
+import { LMap, LTileLayer, LMarker, LTooltip } from "vue2-leaflet";
 
 export default {
   name: "Map",
+  props: {
+    notas: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     LMap,
     LTileLayer,
     LMarker,
-    LPopup,
     LTooltip,
   },
   data() {
@@ -39,29 +47,13 @@ export default {
       url: `https://api.mapbox.com/styles/v1/${id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
       zoom: 8,
       noticias: [],
-      loading: true,
     };
-  },
-  mounted() {
-    this.getNoticias();
-  },
-  methods: {
-    getNoticias() {
-      notasCollection.onSnapshot((noticias) => {
-        const noticiasArray = [];
-        noticias.docs.forEach((noticia) => {
-          noticiasArray.push(Object.assign({ id: noticia.id }, noticia.data()));
-        });
-        this.noticias = noticiasArray;
-      });
-      this.loading = false;
-    },
   },
 };
 </script>
 
 <style scoped>
 #mapContainer {
-  height: 80vh;
+  height: 70vh;
 }
 </style>
