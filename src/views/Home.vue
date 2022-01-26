@@ -53,6 +53,7 @@
     <v-container fluid>
       <!-- <MapVisual></MapVisual> -->
       <MapBox :notas="notasByDepartamento"></MapBox>
+      <NotasLoop :notas="filteredNotas" />
     </v-container>
   </div>
 </template>
@@ -61,12 +62,14 @@
 // import MapVisual from "@/components/MapComponents/MapVisual";
 import { mapState } from "vuex";
 import MapBox from "@/components/MapComponents/MapBox";
+import NotasLoop from "@/components/NotasLoop";
 
 export default {
   name: "Home",
   components: {
     // MapVisual,
     MapBox,
+    NotasLoop,
   },
   data() {
     return {
@@ -100,7 +103,7 @@ export default {
   },
   computed: {
     ...mapState(["notas", "departamentos"]),
-    notasByDepartamento() {
+    filteredNotas() {
       let filteredNotas = [];
       filteredNotas = this.notas.filter((nota) =>
         nota.date.includes(this.year)
@@ -118,7 +121,10 @@ export default {
         );
       }
 
-      return this.lodash.groupBy(filteredNotas, "municipioId");
+      return filteredNotas;
+    },
+    notasByDepartamento() {
+      return this.lodash.groupBy(this.filteredNotas, "municipioId");
     },
   },
   methods: {

@@ -45,7 +45,7 @@ export default {
     return {
       center: [14.594215561943921, -86.9293212890625],
       url: `https://api.mapbox.com/styles/v1/${id}/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
-      zoom: 8,
+      zoom: 7,
       noticias: [],
     };
   },
@@ -54,6 +54,6 @@ export default {
 
 <style scoped>
 #mapContainer {
-  height: 70vh;
+  height: 60vh;
 }
 </style>

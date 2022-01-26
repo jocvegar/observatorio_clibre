@@ -39,7 +39,7 @@
             :items="notas"
             :items-per-page="10"
             :loading="loading"
-            :sort-desc="false"
+            :sort-desc="true"
             sort-by="date"
             :search="search"
             :footer-props="{
