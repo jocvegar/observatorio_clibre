@@ -25,6 +25,6 @@ pnpm-debug.log*
 # firebase
 config.js
 .firebase
-
+.firebase/*.cache
 #mapBox
 mapConfig.js

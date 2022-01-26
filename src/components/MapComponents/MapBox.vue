@@ -5,7 +5,7 @@
         :zoom="zoom"
         :center="center"
         style="z-index: 0"
-        :minZoom="7"
+        :minZoom="5"
         :options="{ scrollWheelZoom: false }"
       >
         <LTileLayer :url="url"></LTileLayer>
