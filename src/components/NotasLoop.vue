@@ -1,5 +1,5 @@
 <template>
-  <v-row class="pa-0 ma-0">
+  <v-row class="pa-0 my-2">
     <v-col cols="12">
       <v-card>
         <v-card-title>
