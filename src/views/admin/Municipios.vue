@@ -56,8 +56,7 @@
               >
                 Editar
               </v-btn>
-
-              <v-btn
+              <!-- <v-btn
                 @click="deleteMunicipio(item)"
                 small
                 class="mx-4"
@@ -66,7 +65,7 @@
                 color="red"
               >
                 Eliminar
-              </v-btn>
+              </v-btn> -->
             </template>
           </v-data-table>
         </v-card>
