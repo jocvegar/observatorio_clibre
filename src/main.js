@@ -8,6 +8,7 @@ import { Icon } from "leaflet";
 import { auth } from "@/firebaseConfig";
 import VueLodash from "vue-lodash";
 import lodash from "lodash";
+import VueExcelXlsx from "vue-excel-xlsx";
 
 delete Icon.Default.prototype._getIconUrl;
 
@@ -20,6 +21,7 @@ Icon.Default.mergeOptions({
 Vue.config.productionTip = false;
 Vue.use(require("vue-moment"));
 Vue.use(VueLodash, { lodash: lodash });
+Vue.use(VueExcelXlsx);
 
 let app;
 

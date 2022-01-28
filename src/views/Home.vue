@@ -1,5 +1,21 @@
 <template>
   <div>
+    <vue-excel-xlsx
+      :data="filteredNotas"
+      :columns="headers"
+      :file-name="'notas_' + new Date().toISOString().slice(0, 10)"
+      :file-type="'xlsx'"
+      class="pt-6 d-flex justify-end pr-5"
+      id="export-excel"
+    >
+      <v-btn
+        color="primary"
+        elevation="2"
+        :disabled="filteredNotas.length == 0"
+      >
+        Descargar Reporte
+      </v-btn>
+    </vue-excel-xlsx>
     <v-card :loading="loading" class="mx-auto mt-4" elevation="0">
       <template slot="progress">
         <v-progress-linear color="blue" indeterminate></v-progress-linear>
@@ -94,6 +110,48 @@ export default {
         "Procesos legales",
         "Uso abusivo del poder del Estado",
       ],
+      headers: [
+        {
+          label: "Fecha",
+          field: "date",
+        },
+        {
+          label: "Titular",
+          field: "titular",
+        },
+        {
+          label: "Tipo de agresión",
+          field: "tipo_de_agresion",
+        },
+        {
+          label: "Genero",
+          field: "genero",
+        },
+        {
+          label: "Agresor",
+          field: "agresor",
+        },
+        {
+          label: "Medio de comunicación",
+          field: "medio_de_comunucacion",
+        },
+        {
+          label: "Link",
+          field: "link",
+        },
+        {
+          label: "Departamento",
+          field: "departamentoNombre",
+        },
+        {
+          label: "Municipio",
+          field: "municipioNombre",
+        },
+        {
+          label: "Narración",
+          field: "narracion",
+        },
+      ],
     };
   },
   mounted() {
@@ -139,3 +197,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#export-excel {
+  width: 100%;
+}
+</style>
