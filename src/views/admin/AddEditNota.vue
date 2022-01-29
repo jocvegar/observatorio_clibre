@@ -54,7 +54,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Titular"
-                v-model="nota.titular"
+                v-model.trim="nota.titular"
                 required
               ></v-text-field>
             </v-col>
@@ -76,7 +76,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Agresor"
-                v-model="nota.agresor"
+                v-model.trim="nota.agresor"
                 required
               ></v-text-field>
             </v-col>
@@ -91,12 +91,13 @@
             <v-col cols="12" md="6">
               <v-text-field
                 label="Link"
-                v-model="nota.link"
+                v-model.trim="nota.link"
                 type="url"
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-select
+                :error-messages="departamentosErrors"
                 :items="departamentos"
                 label="Departamento"
                 v-model="nota.departamento"
@@ -104,11 +105,14 @@
                 item-text="nombre"
                 return-object
                 @change="getMunicipios"
+                @input="$v.nota.departamento.$touch()"
+                @blur="$v.nota.departamento.$touch()"
                 required
               ></v-select>
             </v-col>
             <v-col cols="12" md="6">
               <v-select
+                :error-messages="municipiosErrors"
                 :items="municipios"
                 label="Municipio"
                 v-model="nota.municipio"
@@ -116,13 +120,15 @@
                 item-text="nombre"
                 return-object
                 required
+                @input="$v.nota.departamento.$touch()"
+                @blur="$v.nota.departamento.$touch()"
               ></v-select>
             </v-col>
             <v-col cols="12">
               <v-textarea
                 name="input-7-1"
                 label="Narración"
-                v-model="nota.narracion"
+                v-model.trim="nota.narracion"
                 required
               ></v-textarea>
             </v-col>
@@ -163,9 +169,17 @@
 import { municipiosCollection, notasCollection } from "@/firebaseConfig";
 import moment from "moment";
 import { mapState } from "vuex";
-
+import { validationMixin } from "vuelidate";
+import { required } from "vuelidate/lib/validators";
 export default {
   name: "AddEditNota",
+  mixins: [validationMixin],
+  validations: {
+    nota: {
+      departamento: { required },
+      municipio: { required },
+    },
+  },
   props: {
     type: {
       type: String,
@@ -245,6 +259,8 @@ export default {
   },
   methods: {
     submitNew() {
+      this.$v.$touch();
+      if (this.$v.nota.$invalid) return;
       notasCollection
         .add({
           date: this.nota.date,
@@ -273,6 +289,8 @@ export default {
         });
     },
     updateNota() {
+      this.$v.$touch();
+      if (this.$v.nota.$invalid) return;
       notasCollection
         .doc(this.item.id)
         .update({
@@ -318,6 +336,19 @@ export default {
     ...mapState(["departamentos", "allMunicipios"]),
     formattedDate() {
       return this.nota.date ? moment(this.nota.date).format("DD/MM/YYYY") : "";
+    },
+    departamentosErrors() {
+      const errors = [];
+      if (!this.$v.nota.departamento.$dirty) return errors;
+      !this.$v.nota.departamento.required &&
+        errors.push("Departamento es requerido");
+      return errors;
+    },
+    municipiosErrors() {
+      const errors = [];
+      if (!this.$v.nota.municipio.$dirty) return errors;
+      !this.$v.nota.municipio.required && errors.push("Municipio es requerido");
+      return errors;
     },
   },
 };
