@@ -60,10 +60,36 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-select
+                :error-messages="tipoDeAgresionErrors"
                 :items="agresionItems"
                 label="Tipo de agresión"
                 v-model="nota.tipo_de_agresion"
-                required
+                @input="$v.nota.tipo_de_agresion.$touch()"
+                @blur="$v.nota.tipo_de_agresion.$touch()"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                :items="agresorItems"
+                label="Agresor"
+                v-model.trim="nota.agresor"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                :error-messages="alertaErrors"
+                :items="alertaItems"
+                label="Alerta"
+                v-model.trim="nota.alerta"
+                @input="$v.nota.alerta.$touch()"
+                @blur="$v.nota.alerta.$touch()"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                :items="victimaItems"
+                label="Victima"
+                v-model.trim="nota.victima"
               ></v-select>
             </v-col>
             <v-col cols="12" md="6">
@@ -72,13 +98,6 @@
                 label="Género"
                 v-model="nota.genero"
               ></v-select>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field
-                label="Agresor"
-                v-model.trim="nota.agresor"
-                required
-              ></v-text-field>
             </v-col>
             <v-col cols="12" md="6">
               <v-select
@@ -178,6 +197,8 @@ export default {
     nota: {
       departamento: { required },
       municipio: { required },
+      alerta: { required },
+      tipo_de_agresion: { required },
     },
   },
   props: {
@@ -205,6 +226,8 @@ export default {
         tipo_de_agresion: "",
         genero: "",
         agresor: "",
+        alerta: "",
+        victima: "",
         medio_de_comunucacion: "",
         link: "",
         departamento: "",
@@ -212,18 +235,95 @@ export default {
         narracion: "",
       },
       agresionItems: [
-        "Agresión física",
+        "Agresión Física",
+        "Agresiones normativas",
         "Amenazas",
         "Asesinato",
+        "Ataque Corporal",
+        "Atentado",
         "Censura",
+        "Ciberataque",
         "Criminalización de la protesta pública",
-        "Detención arbitraria",
+        "Desaparición",
+        "Despido Injustificado",
+        "Detención",
+        "Discursos no Protegidos",
         "Estigmatización",
+        "Hostigamiento",
+        "Impedimento Informativo",
         "Intimidación",
         "Obstrucción informativa",
-        "Otro",
         "Procesos legales",
+        "COVID-19",
+        "Robo",
+        "Sabotaje",
+        "Secuestro",
         "Uso abusivo del poder del Estado",
+      ],
+      agresorItems: [
+        "Activista político",
+        "Desconocido",
+        "Dueños de medios",
+        "Empresa privada",
+        "Funcionarios público no determinado",
+        "Militares",
+        "Operadores de justicia",
+        "Otro",
+        "Policía militar",
+        "Policías",
+      ],
+      alertaItems: [
+        "Agresión física selectiva",
+        "Amenaza",
+        "Amenazas",
+        "Asesinato",
+        "Asesinatos",
+        "Atentado",
+        "Censura Sutil",
+        "Censura previa",
+        "Criminalización ",
+        "Destrucción de material informativo",
+        "Estigmatización",
+        "Expresiones artísticas",
+        "Hostigamiento",
+        "Internet",
+        "Intimidación",
+        "Intimidación",
+        "Manipulación de la información pública",
+        "Negación de la información",
+        "Obstrucción de la labor informativa",
+        "Otro",
+        "Otros delitos",
+        "Pluralismo",
+        "Publicidad",
+        "Represión física para disolución de la protesta",
+        "Robo de equipo periodístico",
+        "Secretividad",
+        "Secuestro",
+        "Tratos crueles",
+        "Uso de derecho civil",
+        "Uso del derecho administrativo",
+        "Uso del derecho penal",
+        "Vigilancia",
+      ],
+      victimaItems: [
+        "Comunicador social",
+        "Dueños de medios ",
+        "Estudiantes",
+        "Vocerías comunitarias",
+        "Sindicalistas",
+        "Funcionario público",
+        "Líder o lideresa social",
+        "Indígenas",
+        "Defensor/a de dd.hh.",
+        "Fuentes informativas",
+        "Medios de comunicación",
+        "Población en general",
+        "Radio comunitaria",
+        "Periodista independiente",
+        "Rapcos",
+        "Líder político",
+        "Otro",
       ],
       generoItems: ["Femenino", "Masculino", "LGTTBQ+"],
       communicationItems: [
@@ -268,6 +368,8 @@ export default {
           tipo_de_agresion: this.nota.tipo_de_agresion,
           genero: this.nota.genero,
           agresor: this.nota.agresor,
+          alerta: this.nota.alerta,
+          victima: this.nota.agresor,
           medio_de_comunucacion: this.nota.medio_de_comunucacion,
           link: this.nota.link,
           departamentoNombre: this.nota.departamento.nombre,
@@ -299,6 +401,8 @@ export default {
           tipo_de_agresion: this.nota.tipo_de_agresion,
           genero: this.nota.genero,
           agresor: this.nota.agresor,
+          alerta: this.nota.alerta,
+          victima: this.nota.agresor,
           medio_de_comunucacion: this.nota.medio_de_comunucacion,
           link: this.nota.link,
           departamentoNombre: this.nota.departamento.nombre,
@@ -348,6 +452,19 @@ export default {
       const errors = [];
       if (!this.$v.nota.municipio.$dirty) return errors;
       !this.$v.nota.municipio.required && errors.push("Municipio es requerido");
+      return errors;
+    },
+    tipoDeAgresionErrors() {
+      const errors = [];
+      if (!this.$v.nota.tipo_de_agresion.$dirty) return errors;
+      !this.$v.nota.tipo_de_agresion.required &&
+        errors.push("Tipo de agresión es requerido");
+      return errors;
+    },
+    alertaErrors() {
+      const errors = [];
+      if (!this.$v.nota.alerta.$dirty) return errors;
+      !this.$v.nota.alerta.required && errors.push("Alerta es requerida");
       return errors;
     },
   },

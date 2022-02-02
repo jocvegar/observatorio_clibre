@@ -77,6 +77,7 @@ export default {
           text: "Titular",
           value: "titular",
           class: "nowrap",
+          width: "400px",
         },
         {
           text: "Tipo de agresión",
@@ -84,13 +85,23 @@ export default {
           class: "nowrap",
         },
         {
-          text: "Genero",
-          value: "genero",
+          text: "Agresor",
+          value: "agresor",
           class: "nowrap",
         },
         {
-          text: "Agresor",
-          value: "agresor",
+          text: "Alerta",
+          value: "alerta",
+          class: "nowrap",
+        },
+        {
+          text: "Victima",
+          value: "victima",
+          class: "nowrap",
+        },
+        {
+          text: "Género",
+          value: "genero",
           class: "nowrap",
         },
         {
@@ -117,6 +128,7 @@ export default {
           text: "Narración",
           value: "narracion",
           class: "nowrap",
+          width: "600px",
         },
       ],
     };

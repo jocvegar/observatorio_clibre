@@ -125,13 +125,23 @@ export default {
           class: "nowrap",
         },
         {
-          text: "Genero",
-          value: "genero",
+          text: "Agresor",
+          value: "agresor",
           class: "nowrap",
         },
         {
-          text: "Agresor",
-          value: "agresor",
+          text: "Alerta",
+          value: "alerta",
+          class: "nowrap",
+        },
+        {
+          text: "Victima",
+          value: "victima",
+          class: "nowrap",
+        },
+        {
+          text: "Género",
+          value: "genero",
           class: "nowrap",
         },
         {

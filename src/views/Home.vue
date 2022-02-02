@@ -56,9 +56,9 @@
           <v-col cols="12" md="3" sm="6" class="pb-0">
             <v-select
               clearable
-              :items="items"
-              v-model="violacion"
-              label="Tipo de Violación"
+              :items="alertaItems"
+              v-model="alerta"
+              label="Tipo de Alerta"
               outlined
               dense
             ></v-select>
@@ -89,26 +89,71 @@ export default {
   },
   data() {
     return {
-      items: ["Foo", "Bar", "Fizz", "Buzz"],
       year: new Date().getFullYear(),
       departamento: "",
       agresion: "",
-      violacion: "",
+      alerta: "",
       loading: true,
       yearsArray: [],
       agresionItems: [
-        "Agresión física",
+        "Agresión Física",
+        "Agresiones normativas",
         "Amenazas",
         "Asesinato",
+        "Ataque Corporal",
+        "Atentado",
         "Censura",
+        "Ciberataque",
         "Criminalización de la protesta pública",
-        "Detención arbitraria",
+        "Desaparición",
+        "Despido Injustificado",
+        "Detención",
+        "Discursos no Protegidos",
         "Estigmatización",
+        "Hostigamiento",
+        "Impedimento Informativo",
         "Intimidación",
         "Obstrucción informativa",
-        "Otro",
         "Procesos legales",
+        "COVID-19",
+        "Robo",
+        "Sabotaje",
+        "Secuestro",
         "Uso abusivo del poder del Estado",
+      ],
+      alertaItems: [
+        "Agresión física selectiva",
+        "Amenaza",
+        "Amenazas",
+        "Asesinato",
+        "Asesinatos",
+        "Atentado",
+        "Censura Sutil",
+        "Censura previa",
+        "Criminalización ",
+        "Destrucción de material informativo",
+        "Estigmatización",
+        "Expresiones artísticas",
+        "Hostigamiento",
+        "Internet",
+        "Intimidación",
+        "Intimidación",
+        "Manipulación de la información pública",
+        "Negación de la información",
+        "Obstrucción de la labor informativa",
+        "Otro",
+        "Otros delitos",
+        "Pluralismo",
+        "Publicidad",
+        "Represión física para disolución de la protesta",
+        "Robo de equipo periodístico",
+        "Secretividad",
+        "Secuestro",
+        "Tratos crueles",
+        "Uso de derecho civil",
+        "Uso del derecho administrativo",
+        "Uso del derecho penal",
+        "Vigilancia",
       ],
       headers: [
         {
@@ -124,12 +169,20 @@ export default {
           field: "tipo_de_agresion",
         },
         {
-          label: "Genero",
-          field: "genero",
-        },
-        {
           label: "Agresor",
           field: "agresor",
+        },
+        {
+          label: "Alerta",
+          field: "alerta",
+        },
+        {
+          label: "Victima",
+          field: "victima",
+        },
+        {
+          label: "Género",
+          field: "genero",
         },
         {
           label: "Medio de comunicación",
@@ -176,6 +229,12 @@ export default {
       if (this.agresion && this.agresion.length > 0) {
         filteredNotas = filteredNotas.filter(
           (nota) => nota.tipo_de_agresion == this.agresion
+        );
+      }
+
+      if (this.alerta && this.alerta.length > 0) {
+        filteredNotas = filteredNotas.filter(
+          (nota) => nota.alerta == this.alerta
         );
       }
 
